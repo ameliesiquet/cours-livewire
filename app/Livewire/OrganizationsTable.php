@@ -12,7 +12,7 @@ class OrganizationsTable extends Component
     use WithPagination;
 
     public $account;
-    public $search;
+    public $search ='';
 
     public function mount()
     {
