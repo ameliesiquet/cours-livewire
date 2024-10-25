@@ -1,20 +1,14 @@
 <?php
 
+use App\Livewire\OrganizationsCreate;
+use App\Livewire\OrganizationsEdit;
+use App\Livewire\OrganizationsTable;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/organizations', function () {
-    $account = App\Models\Account::whereName('Acme Corporation')->first();
+Route::get('/organizations', OrganizationsTable::class)->name('home');
 
-    $organizations = $account
-        ->organizations()
-        ->orderBy('name')
-        ->paginate(10);
+Route::get('/organizations/{organization}/edit', OrganizationsEdit::class)->name('organizations.edit');
+Route::get('/organizations/create', OrganizationsCreate::class)->name('organizations.create');
+Route::get('/organizations/update', OrganizationsEdit::class)->name('organizations.update');
 
-    return view('Organisations.index', compact('organizations'));
-})->name('home');
 
-Route::get('/organizations/{organization}/edit', function (App\Models\Organization $organization) {
-    $organization->load('contacts');
-
-    return view('Organisations.edit', compact('organization'));
-})->name('organizations.edit');
